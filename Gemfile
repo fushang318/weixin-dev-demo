@@ -38,6 +38,7 @@ gem 'spring',        group: :development
 gem "haml"
 gem "mongoid", "~> 4.0"
 gem "unicorn"
+gem "figaro"
 gem "mina",
     :git => "git://github.com/fushang318/mina.git",
     :tag => "v0.2.0fix"
