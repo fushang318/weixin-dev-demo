@@ -1,6 +1,9 @@
 class WeixinController < ApplicationController
   def verify
     if _check_signature
+      p request.body.class
+      p request.body
+      p request.body.read
       render :text => params[:echostr]
     else
       render :status => 401,:text=>""
