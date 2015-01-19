@@ -25,7 +25,7 @@ class AccessToken
     at = AccessToken.first
     expires_at = at.updated_at.to_i + at.expires_in
     # 提前十秒过期，为了平滑过渡
-    expires_at - 10 < Time.now
+    expires_at - 10 < Time.now.to_i
   end
 
   def self.value
