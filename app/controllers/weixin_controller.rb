@@ -14,11 +14,11 @@ class WeixinController < ApplicationController
       message = wmp.message
       str = "您的ID是 #{message.to_user_name}\n"
       result_content = case message.class
-      when TextMessage
+      when WeixinMessageParse::TextMessage
         "#{str}您输入的是:#{message.content}"
-      when VoiceMessage
+      when WeixinMessageParse::VoiceMessage
         "#{str}您的语音信息是:#{message.recognition}"
-      when SubscribeEventMessage
+      when WeixinMessageParse::SubscribeEventMessage
         "欢迎关注fushang318\n#{str}您可以输入文本或录音"
       end
       res = %`
@@ -27,7 +27,7 @@ class WeixinController < ApplicationController
         <FromUserName><![CDATA[#{message.to_user_name}]]></FromUserName>
         <CreateTime>#{Time.now.to_i}</CreateTime>
         <MsgType><![CDATA[text]]></MsgType>
-        <Content><![CDATA[你输入的是:#{message.content}]]></Content>
+        <Content><![CDATA[#{result_content}]]></Content>
       </xml>
       `
       render :text => res
