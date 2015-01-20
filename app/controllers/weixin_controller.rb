@@ -13,7 +13,7 @@ class WeixinController < ApplicationController
       wmp = WeixinMessageParse.new(xml)
       message = wmp.message
       str = "您的ID是 #{message.to_user_name}\n"
-      result_content = case message.class
+      result_content = case message
       when WeixinMessageParse::TextMessage
         "#{str}您输入的是:#{message.content}"
       when WeixinMessageParse::VoiceMessage
