@@ -10,10 +10,17 @@ class WeixinController < ApplicationController
   def verify_post
     if _check_signature
       xml = request.body.read
-      message = WeixinMessage.new(xml)
-      access_token = AccessToken.value
-      p Weixin.get_user_info(access_token, message.to_user_name)
-      p Weixin.get_user_info(access_token, message.from_user_name)
+      wmp = WeixinMessageParse.new(xml)
+      message = wmp.message
+      str = "您的ID是 #{message.to_user_name}\n"
+      result_content = case message.class
+      when TextMessage
+        "#{str}您输入的是:#{message.content}"
+      when VoiceMessage
+        "#{str}您的语音信息是:#{message.recognition}"
+      when SubscribeEventMessage
+        "欢迎关注fushang318\n#{str}您可以输入文本或录音"
+      end
       res = %`
       <xml>
         <ToUserName><![CDATA[#{message.from_user_name}]]></ToUserName>
